@@ -10,11 +10,18 @@ from .models import User
 def signup(request):
     content = json.loads(request.body.decode("utf-8"))
     try:
-        email, password = content["email"], content["password"]
-        if User.objects.filter(email=email).exists():
+        username, email, password = (
+            content["username"],
+            content["email"],
+            content["password"],
+        )
+        if (
+            User.objects.filter(email=email).exists()
+            or User.objects.filter(username=username).exists()
+        ):
             return HttpResponse(status=409)
         else:
-            user = User(email=email, password=password)
+            user = User(username=username, email=email, password=password)
             user.save()
             return HttpResponse(status=201)
     except:
@@ -25,13 +32,22 @@ def signup(request):
 def login(request):
     params = request.GET
     try:
-        user = {"email": params["email"], "password": params["password"]}
-        if User.objects.filter(email=user["email"], password=user["password"]).exists():
+        user = {
+            "username/email": params["username/email"],
+            "password": params["password"],
+            "exp": datetime.datetime.now(tz=datetime.timezone.utc)
+            + datetime.timedelta(hours=1),
+        }
+        if (
+            User.objects.filter(
+                email=user["username/email"], password=user["password"]
+            ).exists()
+            or User.objects.filter(
+                username=user["username/email"], password=user["password"]
+            ).exists()
+        ):
             token = jwt.encode(
-                {
-                    "exp": datetime.datetime.now(tz=datetime.timezone.utc)
-                    + datetime.timedelta(hours=1)
-                },
+                user,
                 "login",
                 algorithm="HS256",
             )

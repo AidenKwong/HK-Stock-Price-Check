@@ -1,6 +1,7 @@
 <template>
   <form class="form" @submit.prevent="handleSubmit">
     <h2>Sign Up</h2>
+    <input v-model="username" type="text" placeholder="Username" required />
     <input v-model="email" type="text" placeholder="Email Address" required />
     <input v-model="password" type="password" placeholder="Password" required />
     <input
@@ -16,12 +17,12 @@
 
 <script>
 import axios from "axios";
-import router from "../router";
 
 export default {
   name: "Signup",
   data() {
     return {
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -35,6 +36,7 @@ export default {
       } else {
         axios
           .post("http://127.0.0.1:8000/users/signup", {
+            username: this.username,
             email: this.email,
             password: this.password,
           })

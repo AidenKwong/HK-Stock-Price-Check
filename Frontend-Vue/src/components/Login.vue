@@ -1,7 +1,12 @@
 <template>
   <form class="form" @submit.prevent="handleSubmit">
     <h2>Login</h2>
-    <input v-model="email" type="text" placeholder="Email Address" required />
+    <input
+      v-model="username_email"
+      type="text"
+      placeholder="Username / Email Address"
+      required
+    />
     <input v-model="password" type="password" placeholder="Password" required />
     <button class="button">Login</button>
     <router-link to="/signup" class="link">Create account</router-link>
@@ -15,7 +20,7 @@ export default {
   name: "Login",
   data() {
     return {
-      email: "",
+      username_email: "",
       password: "",
     };
   },
@@ -24,7 +29,7 @@ export default {
       axios
         .get("http://127.0.0.1:8000/users/login", {
           params: {
-            email: this.email,
+            "username/email": this.username_email,
             password: this.password,
           },
         })
@@ -32,6 +37,7 @@ export default {
           if (res.status === 200) {
             alert("Login successful");
             localStorage.setItem("hkspc-token", res.data);
+            this.$router.push("/search");
           }
         })
         .catch((err) => {
