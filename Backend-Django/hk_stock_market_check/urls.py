@@ -21,4 +21,5 @@ urlpatterns = [
     path("", debug.default_urlconf),
     path("admin/", admin.site.urls),
     path("users/", include("users.urls")),
+    path("stocks/", include("stocks.urls")),
 ]
