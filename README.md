@@ -1,10 +1,11 @@
-# HK-Stock-Price-Check
+# HK Stock Price Check
 
 This is not deployed yet, only for localhosting.
 
 To run on local server, run the following commands:
 
-## Backend (Django)
+## How to start and run the website in the localhost
+### Backend (Django)
 
 Navigate into backend folder
 
@@ -20,7 +21,7 @@ Run the server
 
     python manage.py runserver
 
-## Frontend (Vue)
+### Frontend (Vue)
 
 Navigate into frontend folder
 
@@ -35,3 +36,15 @@ Start the frontend browser
     yarn serve
 
 Then, open <localhost:8080>
+
+## Features of the website
+1. User Authentication system  
+Users records are stored in database, with jwt as authentication token to fetch stock data  
+3. Records of lastest 3 months of 5 stock prices
+4. Easy and user friendly UI/UX
+
+## Areas of improvement for the website
+1. Users' passwords should be hashed in database
+2. Stock Data should be fetched from realtime api
+3. Should use other database like postgreSQL for long-term saving of stock data
+
