@@ -22,6 +22,10 @@ Run the server
 
 ## Frontend (Vue)
 
+Navigate into frontend folder
+
+    cd Frontend-Vue
+
 Install required packages
 
     yarn install
